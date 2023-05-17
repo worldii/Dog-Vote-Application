@@ -27,7 +27,7 @@ public class Dog {
     @Column(name="vote_count")
     Long voteCount;
 
-    @Column(name="dscription")
+    @Column(name="description")
     String description;
 
     @Column(name="detail")
