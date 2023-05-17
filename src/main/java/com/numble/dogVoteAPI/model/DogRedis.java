@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @RedisHash("dog")
 public class DogRedis {
     @Id
-    Long dog_id;
+    Long id;
 
     String name;
     String imageUrl;
@@ -20,7 +20,7 @@ public class DogRedis {
     String detail;
     @Builder
     public DogRedis(Long dog_id, String name, String imageUrl, Long voteCount, String description, String detail) {
-        this.dog_id = dog_id;
+        this.id = dog_id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.voteCount = voteCount;
