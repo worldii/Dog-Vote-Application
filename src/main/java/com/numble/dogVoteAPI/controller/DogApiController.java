@@ -1,20 +1,20 @@
 package com.numble.dogVoteAPI.controller;
 
+import com.numble.dogVoteAPI.dto.DogDetailResponseDto;
 import com.numble.dogVoteAPI.service.DogRedisService;
 import com.numble.dogVoteAPI.service.DogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dogs")
+@Slf4j
 public class DogApiController {
     private final DogRedisService dogRedisService;
     private final DogService dogService;
-
 
     @PostMapping("/vote")
     public void vote() {
@@ -23,18 +23,22 @@ public class DogApiController {
 
     @PostMapping("/unvote")
     public void unvote() {
-
         System.out.println("unvote");
     }
 
     @GetMapping
     public void getDogs() {
 
-        System.out.println("getDogs");
     }
 
     @GetMapping("/{id}")
-    public void getDog() {
-        System.out.println("getDog");
+    public ResponseEntity<?> getDog(@PathVariable Long id) {
+
+        if (dogRedisService.getDogRedis(id) == null) {
+            DogDetailResponseDto select = dogService.select(id);
+            dogRedisService.saveDog(select.toEntity());
+        }
+        // else
+        return ResponseEntity.ok(dogRedisService.getDogRedis(id));
     }
 }

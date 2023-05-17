@@ -22,11 +22,13 @@ public class DogService {
     public List<DogSimpleResponseDto> findAll() {
         List<Dog> all = dogRepository.findAll();
         // all 을 DogSimpleResponseDto 로 변환
+        log.info("Dog Service findAll");
         return all.stream().map(DogSimpleResponseDto::new).collect(Collectors.toList());
     }
 
-    public DogDetailResponseDto findAll(Long id) {
+    public DogDetailResponseDto select(Long id) {
         // Dog 을 DogDetailResponseDto 로 변환
+        log.info("Dog Service select");
         Dog dog = dogRepository.findById(id).orElseThrow(()-> new RuntimeException("해당하는 강아지가 없습니다."));
         return new DogDetailResponseDto(dog);
     }

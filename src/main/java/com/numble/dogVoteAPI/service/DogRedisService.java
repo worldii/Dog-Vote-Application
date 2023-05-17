@@ -16,13 +16,17 @@ public class DogRedisService {
 
     @Transactional
     public void saveDog ( DogRedis dogRedis ) {
+
+        log.info("saveDogRedis");
+
         dogRedisRepository.save(dogRedis);
     }
 
-
     @Transactional(readOnly = true)
-    public DogRedis getDogRedis (Long dog_id ) {
-       return dogRedisRepository.findById(dog_id).orElseThrow(() -> new RuntimeException("해당하는 강아지가 없습니다."));
+    public DogRedis getDogRedis (Long id) {
+        // 없으면 null 반환
+        log.info("getDogRedis");
+        return dogRedisRepository.findById(id).orElse(null);
     }
 
 }

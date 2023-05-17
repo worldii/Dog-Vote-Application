@@ -18,5 +18,10 @@ public class DogSimpleResponseDto {
     private String description;
 
     public DogSimpleResponseDto(Dog dog) {
+        this.description = dog.getDescription();
+        this.id = dog.getId();
+        this.imageUrl = dog.getImageUrl();
+        this.name = dog.getName();
+        this.voteCount = dog.getVoteCount();
     }
 }

@@ -12,15 +12,14 @@ import javax.persistence.Id;
 public class DogRedis {
     @Id
     Long id;
-
     String name;
     String imageUrl;
     Long voteCount;
     String description;
     String detail;
     @Builder
-    public DogRedis(Long dog_id, String name, String imageUrl, Long voteCount, String description, String detail) {
-        this.id = dog_id;
+    public DogRedis(Long id, String name, String imageUrl, Long voteCount, String description, String detail) {
+        this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.voteCount = voteCount;
