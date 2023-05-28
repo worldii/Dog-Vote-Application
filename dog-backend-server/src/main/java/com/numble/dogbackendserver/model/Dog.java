@@ -32,4 +32,7 @@ public class Dog {
 
     @Column(name="detail")
     String detail;
+    public void setVoteCount(Long count) {
+        this.voteCount = count;
+    }
 }
