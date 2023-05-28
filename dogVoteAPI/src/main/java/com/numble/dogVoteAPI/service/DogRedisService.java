@@ -15,13 +15,13 @@ public class DogRedisService {
     private final DogRedisRepository dogRedisRepository;
 
     @Transactional
-    public void saveDog ( DogRedis dogRedis ) {
+    public void saveDog(DogRedis dogRedis) {
         log.info("saveDogRedis");
         dogRedisRepository.save(dogRedis);
     }
 
     @Transactional(readOnly = true)
-    public DogRedis getDogRedis (Long id) {
+    public DogRedis getDogRedis(Long id) {
         // 없으면 null 반환
         log.info("getDogRedis");
         return dogRedisRepository.findById(id).orElse(null);

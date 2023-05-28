@@ -18,18 +18,18 @@ public class Dog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     String name;
 
-    @Column(name="image_url")
+    @Column(name = "image_url")
     String imageUrl;
 
-    @Column(name="vote_count")
+    @Column(name = "vote_count")
     Long voteCount;
 
-    @Column(name="description")
+    @Column(name = "description")
     String description;
 
-    @Column(name="detail")
+    @Column(name = "detail")
     String detail;
 }

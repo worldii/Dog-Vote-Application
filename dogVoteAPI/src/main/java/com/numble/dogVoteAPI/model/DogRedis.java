@@ -19,6 +19,7 @@ public class DogRedis {
     Long voteCount;
     String description;
     String detail;
+
     @Builder
     public DogRedis(Long id, String name, String imageUrl, Long voteCount, String description, String detail) {
         this.id = id;
