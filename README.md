@@ -22,13 +22,14 @@ Spring Boot, Spring JPA, Mysql, Redis, Kafka,  Vue
 - [ ]  CQRS 패턴
 
 # 실행 방법
-- frontend
+## frontend
 npm run serve
-
-- backend
-## redis
+##  backend
+###  redis
 docker run --name some-redis -d -p 6379:6379 redis
+<br>
 docker run -it --link some-redis:redis --rm redis redis-cli -h redis -p 6379
-## kafka
-dogVoteAPI/docker-compose.yml 실행
+<br>
+### kafka
+dogVoteAPI/docker-compose.yml 실행 <br>
 docker-compose up -d
