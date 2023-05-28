@@ -7,7 +7,7 @@ public class DogDetailResponseDto {
     private Long id;
     private String name;
     private String imageUrl;
-    private Long voteCount;
+    private long voteCount;
     private String description;
     private String detail;
 
@@ -17,7 +17,6 @@ public class DogDetailResponseDto {
         this.id = dog.getId();
         this.imageUrl = dog.getImageUrl();
         this.name = dog.getName();
-        System.out.println("Hello" + dog.getVoteCount());
         this.voteCount = dog.getVoteCount();
     }
 
@@ -30,6 +29,5 @@ public class DogDetailResponseDto {
                 .description(description)
                 .detail(detail)
                 .build();
-
     }
 }

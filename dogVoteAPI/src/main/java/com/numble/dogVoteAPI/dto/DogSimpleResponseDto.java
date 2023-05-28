@@ -14,7 +14,7 @@ public class DogSimpleResponseDto {
     private Long id;
     private String name;
     private String imageUrl;
-    private Long voteCount;
+    private long voteCount;
     private String description;
 
     public DogSimpleResponseDto(Dog dog) {

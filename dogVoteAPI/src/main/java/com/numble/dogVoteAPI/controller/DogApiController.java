@@ -5,9 +5,11 @@ import com.numble.dogVoteAPI.dto.PageDto;
 import com.numble.dogVoteAPI.service.DogKafkaService;
 import com.numble.dogVoteAPI.service.DogRedisService;
 import com.numble.dogVoteAPI.service.DogService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/dogs")
 @Slf4j
+@CrossOrigin(origins = {"http://127.0.0.1:8080", "http://192.168.0.1:8080", "http://localhost:8080"})
 public class DogApiController {
     private final DogRedisService dogRedisService;
     private final DogService dogService;
@@ -30,7 +33,6 @@ public class DogApiController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "success");
         return ResponseEntity.ok(map);
-
     }
 
     @PostMapping("/unvote/{id}")
@@ -45,10 +47,12 @@ public class DogApiController {
     @GetMapping
     public ResponseEntity<?> getDogs(@ModelAttribute PageDto pageDto) {
         log.info("pageDto: {}", pageDto);
-
         if (pageDto == null) {
             pageDto = new PageDto();
             pageDto.setPage(0);
+            pageDto.setSize(10);
+        }
+        if (pageDto.getSize() ==0) {
             pageDto.setSize(10);
         }
         log.info("getDogs");
@@ -56,6 +60,7 @@ public class DogApiController {
         dogService.findAll(pageDto);
         return ResponseEntity.ok(dogService.findAll(pageDto));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getDog(@PathVariable Long id) {
@@ -66,5 +71,6 @@ public class DogApiController {
         }
         return ResponseEntity.ok(dogRedisService.getDogRedis(id));
     }
+
 
 }

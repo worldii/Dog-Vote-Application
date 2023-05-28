@@ -56,23 +56,14 @@
 </template>
 
 <script>
+import http from "@/assets/js/http";
+
 export default {
     name: "DogView",
     data() {
         return {
             isVote: false,
-            dog: {
-                
-            id: 1,
-                name: '불독',
-                    description: '불독은 중형견으로 근육질이며 튼튼한 체격을 가지고 있습니다. 주목할만한 특징은 피부가 주름있고, 튀어나온 코를 가지고 있다는 것입니다.',
-                        detail: '불독은 친근하고 온순한 품종입니다. 불굴의 상징으로 알려져 있으며 끈기와 결단력의 상징으로 인식되기도 합니다. 겉으로는 겁이 많아 보일 수도 있지만 실제로는 극도로 용감하고 충성스러운 성격을 가지고 있습니다.',
-                            voteCount: 10,
-                                imageUrl: 'https://loremflickr.com/320/240/dog',
-
-        
-               
-            },
+            dog: {},
         }
     },
     methods: {
@@ -80,11 +71,48 @@ export default {
             this.$router.go(-1);
         },
         voteDog() {
-            this.isVote = !this.isVote;
-            console.log(this.isVote)
+            if (this.isVote) { 
+                // unvote 
+                http.post('/unvote/' + this.$route.params.id ).then((response) => {
+                    console.log(response.data);             
+                    this.isVote = !this.isVote;
+                     console.log(this.isVote)
+                    // reload
+                    http.get('/' + this.$route.params.id).then((response) => {
+                        console.log(response.data);
+                        this.dog = response.data;
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+
+            }
+            else { 
+                // vote
+                http.post('/vote/' + this.$route.params.id ).then((response) => {
+                    console.log(response.data);
+                    this.isVote = !this.isVote;
+                    console.log(this.isVote);
+                    // reload 
+                    http.get('/' + this.$route.params.id).then((response) => {
+                        console.log(response.data);
+                        this.dog = response.data;
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+            }
+
+
             
         }
-
+    },
+    created() {
+        console.log(this.$route.params.id);
+        http.get('/' + this.$route.params.id).then((response) => {
+            console.log(response.data);
+            this.dog = response.data;
+        });
     },
 
 }

@@ -7,46 +7,41 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class DogUpdateService {
     private final DogRedisRepository dogRedisRepository;
     private final DogRepository dogRepository;
-
+    private final DogKafKaVoteCompleteService dogKafKaVoteCompleteService;
     @KafkaListener(topics = "vote")
     public void increaseVote(String mes) {
         log.info("MES + " + mes);
+
         Long dogId = Long.parseLong(mes);
-        log.info("increase Vote" + dogId);
-        Dog dog = dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
-        dog.setVoteCount(dog.getVoteCount() + 1);
-        log.info("increase Vote" + dog.getVoteCount());
-        dogRepository.save(dog);
         dogRedisRepository.findById(dogId).ifPresent(
                 dogRedis -> {
                     log.info(dogRedis.toString());
-
-
                     dogRedis.setVoteCount(dogRedis.getVoteCount() + 1);
-                   log.info("increase Vote" + dogRedis.getVoteCount());
+                    log.info("increase Vote" + dogRedis.getVoteCount());
                     dogRedisRepository.save(dogRedis);
                 }
         );
+
+        Dog dog = dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
+        dogKafKaVoteCompleteService.sendVoteComplete(dog.getVoteCount() + 1);
+        dog.setVoteCount(dog.getVoteCount() + 1);
+        dogRepository.save(dog);
+        log.info("KAFKA END");
+
     }
 
     @KafkaListener(topics = "unvote")
     public void decreaseVote(String message) {
-        log.info("MES + " + message);
         Long dogId = Long.parseLong(message);
-        log.info("decrease Vote" + dogId);
-
-        Dog dog = dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
-        dog.setVoteCount(dog.getVoteCount() - 1);
-        log.info("decrease Vote" + dog.getVoteCount());
-        dogRepository.save(dog);
-
         dogRedisRepository.findById(dogId).ifPresent(
                 dogRedis -> {
                     if (dogRedis.getVoteCount() == 0) {
@@ -58,5 +53,10 @@ public class DogUpdateService {
                     dogRedisRepository.save(dogRedis);
                 }
         );
+        Dog dog = dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
+        dogKafKaVoteCompleteService.sendVoteComplete(dog.getVoteCount()- 1);
+        dog.setVoteCount(dog.getVoteCount() - 1);
+        dogRepository.save(dog);
+        log.info("KAFKA END");
     }
 }
