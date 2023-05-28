@@ -16,9 +16,7 @@ public class DogRedisService {
 
     @Transactional
     public void saveDog ( DogRedis dogRedis ) {
-
         log.info("saveDogRedis");
-
         dogRedisRepository.save(dogRedis);
     }
 

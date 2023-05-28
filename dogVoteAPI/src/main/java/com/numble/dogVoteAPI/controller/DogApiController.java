@@ -16,8 +16,12 @@ public class DogApiController {
     private final DogRedisService dogRedisService;
     private final DogService dogService;
 
-    @PostMapping("/vote")
-    public void vote() {
+    @PostMapping("/vote/{id}")
+    public void vote(@PathVariable Long id) {
+
+        // KAFKA server 에 보내기
+        // dogKafkaProducer.sendDogVote(id);
+
         System.out.println("vote");
     }
 
@@ -31,10 +35,11 @@ public class DogApiController {
 
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getDog(@PathVariable Long id) {
-
         if (dogRedisService.getDogRedis(id) == null) {
+            log.info("getDogRedis is null");
             DogDetailResponseDto select = dogService.select(id);
             dogRedisService.saveDog(select.toEntity());
         }

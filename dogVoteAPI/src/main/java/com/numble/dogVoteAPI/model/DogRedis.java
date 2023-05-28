@@ -2,12 +2,14 @@ package com.numble.dogVoteAPI.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Id;
 
 
 @Getter
+@Setter
 @RedisHash("dog")
 public class DogRedis {
     @Id
