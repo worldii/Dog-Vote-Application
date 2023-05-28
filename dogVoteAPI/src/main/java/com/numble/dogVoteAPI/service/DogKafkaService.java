@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class DogKafkaService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     public void sendVote(Long dogId) {
-        log.info("sendVote");
+        log.info("sendVote",dogId);
         kafkaTemplate.send("vote", dogId.toString());
     }
     public void sendUnvote(Long dogId) {
-        log.info("sendUnvote");
+        log.info("sendUnvote",dogId);
         kafkaTemplate.send("unvote", dogId.toString());
     }
 }

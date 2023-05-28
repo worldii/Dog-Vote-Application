@@ -1,6 +1,7 @@
 package com.numble.dogVoteAPI.controller;
 
 import com.numble.dogVoteAPI.dto.DogDetailResponseDto;
+import com.numble.dogVoteAPI.service.DogKafkaService;
 import com.numble.dogVoteAPI.service.DogRedisService;
 import com.numble.dogVoteAPI.service.DogService;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +16,19 @@ import org.springframework.web.bind.annotation.*;
 public class DogApiController {
     private final DogRedisService dogRedisService;
     private final DogService dogService;
+    private final DogKafkaService dogKafkaService;
+
 
     @PostMapping("/vote/{id}")
     public void vote(@PathVariable Long id) {
-
-        // KAFKA server 에 보내기
-        // dogKafkaProducer.sendDogVote(id);
-
-        System.out.println("vote");
+        log.info("vote");
+        dogKafkaService.sendVote(id);
     }
 
-    @PostMapping("/unvote")
-    public void unvote() {
-        System.out.println("unvote");
+    @PostMapping("/unvote/{id}")
+    public void unvote(@PathVariable Long id){
+        log.info("unvote");
+        dogKafkaService.sendUnvote(id);
     }
 
     @GetMapping
