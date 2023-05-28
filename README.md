@@ -21,3 +21,14 @@ Spring Boot, Spring JPA, Mysql, Redis, Kafka,  Vue
     - [ ]  중복 투표 방지 위해 방법 마련( 헤더, 이메일 등)
 - [ ]  CQRS 패턴
 
+# 실행 방법
+- frontend
+npm run serve
+
+- backend
+## redis
+docker run --name some-redis -d -p 6379:6379 redis
+docker run -it --link some-redis:redis --rm redis redis-cli -h redis -p 6379
+## kafka
+dogVoteAPI/docker-compose.yml 실행
+docker-compose up -d
