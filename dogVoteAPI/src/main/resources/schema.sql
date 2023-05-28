@@ -19,7 +19,7 @@ USE `numble` ;
 CREATE TABLE IF NOT EXISTS `numble`.`dogs` (
                                                `id` BIGINT NOT NULL AUTO_INCREMENT,
                                                `description` VARCHAR(255) NOT NULL,
-    `detail` VARCHAR(1000) NOT NULL,
+    `detail` VARCHAR(10000) NOT NULL,
     `image_url` VARCHAR(255) NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `vote_count` BIGINT NULL DEFAULT 0,
