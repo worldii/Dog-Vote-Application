@@ -17,6 +17,7 @@ public class DogDetailResponseDto {
         this.id = dog.getId();
         this.imageUrl = dog.getImageUrl();
         this.name = dog.getName();
+        System.out.println("Hello" + dog.getVoteCount());
         this.voteCount = dog.getVoteCount();
     }
 

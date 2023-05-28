@@ -10,6 +10,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema numble
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema numble
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `numble` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `numble` ;
 
@@ -18,13 +22,15 @@ USE `numble` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `numble`.`dogs` (
                                                `id` BIGINT NOT NULL AUTO_INCREMENT,
-                                               `description` VARCHAR(255) NOT NULL,
-    `detail` VARCHAR(10000) NOT NULL,
-    `image_url` VARCHAR(255) NOT NULL,
-    `name` VARCHAR(255) NOT NULL,
+                                               `description` VARCHAR(255) NULL DEFAULT NULL,
+    `detail` VARCHAR(255) NULL DEFAULT NULL,
+    `image_url` VARCHAR(255) NULL DEFAULT NULL,
     `vote_count` BIGINT NULL DEFAULT 0,
+
+    `name` VARCHAR(255) NULL DEFAULT NULL,
     PRIMARY KEY (`id`))
     ENGINE = InnoDB
+    AUTO_INCREMENT = 1
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 

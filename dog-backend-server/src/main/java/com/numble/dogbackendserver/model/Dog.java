@@ -25,7 +25,7 @@ public class Dog {
     String imageUrl;
 
     @Column(name="vote_count")
-    Long voteCount;
+    long voteCount;
 
     @Column(name="description")
     String description;
